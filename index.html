@@ -1,0 +1,3157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Explorer | Travel Stories, Guides & Planning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #1a6b9c;
+            --secondary-color: #ff7e5f;
+            --accent-color: #4CAF50;
+            --dark-color: #2c3e50;
+            --light-color: #f8f9fa;
+            --text-color: #444;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --shadow-dark: 0 10px 30px rgba(0, 0, 0, 0.2);
+            --transition: all 0.3s ease;
+            --border-radius: 10px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-color);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--dark-color);
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            font-size: 2.2rem;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 5px;
+            background: var(--secondary-color);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+        }
+
+        .btn-accent {
+            background-color: var(--accent-color);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            background-color: #155a8a;
+        }
+
+        .btn-accent:hover {
+            background-color: #3d8b40;
+        }
+
+        .section-padding {
+            padding: 80px 0;
+        }
+
+        /* Header & Advanced Navigation */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary-color);
+        }
+
+        .logo span {
+            color: var(--secondary-color);
+        }
+
+        .nav-main {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links > li {
+            position: relative;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            transition: var(--transition);
+            padding: 10px 0;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            background: var(--secondary-color);
+            bottom: 0;
+            left: 0;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        /* Dropdown Menus */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 220px;
+            box-shadow: var(--shadow);
+            border-radius: var(--border-radius);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition);
+            z-index: 1001;
+            padding: 10px 0;
+        }
+
+        .dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 12px 20px;
+            color: var(--dark-color);
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f5f5f5;
+            color: var(--secondary-color);
+        }
+
+        .dropdown-content a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* User Actions */
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-left: 1.5rem;
+        }
+
+        .user-actions a {
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .login-btn {
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .login-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .signup-btn {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .signup-btn:hover {
+            background-color: #ff6a47;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+            background: none;
+            border: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 180px 0 100px;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1174&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-search {
+            max-width: 600px;
+            margin: 2rem auto 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            display: flex;
+            gap: 10px;
+            box-shadow: var(--shadow-dark);
+        }
+
+        .hero-search input {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .hero-search button {
+            padding: 15px 30px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .hero-search button:hover {
+            background-color: #ff6a47;
+        }
+
+        /* Stats Section */
+        .stats {
+            background-color: white;
+            padding: 60px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-text {
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+
+        /* Featured Destinations */
+        .destinations {
+            background-color: #f8f9fa;
+        }
+
+        .destination-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .destination-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-dark);
+        }
+
+        .destination-img {
+            height: 220px;
+            width: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .destination-card:hover .destination-img {
+            transform: scale(1.05);
+        }
+
+        .destination-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .destination-info {
+            padding: 1.5rem;
+        }
+
+        .destination-info h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .destination-info .location {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .destination-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        /* Travel Tools Section */
+        .tools {
+            background-color: white;
+        }
+
+        .tools-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .tool-card {
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .tool-card:hover {
+            border-color: var(--secondary-color);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .tool-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Travel Stories */
+        .stories {
+            background-color: #f8f9fa;
+        }
+
+        .story-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .story-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-dark);
+        }
+
+        .story-img {
+            height: 250px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .story-content {
+            padding: 1.5rem;
+        }
+
+        .story-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .story-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 1.5rem;
+        }
+
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(135deg, var(--primary-color), #155a8a);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter:before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+        }
+
+        .newsletter:after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            bottom: -80px;
+            left: -80px;
+        }
+
+        .newsletter h2 {
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 30px 0 0 30px;
+            font-size: 1rem;
+        }
+
+        .newsletter-form button {
+            padding: 15px 30px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 0 30px 30px 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .newsletter-form button:hover {
+            background-color: #ff6a47;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-logo i {
+            margin-right: 10px;
+            color: var(--secondary-color);
+        }
+
+        .footer-logo span {
+            color: var(--secondary-color);
+        }
+
+        .footer-about p {
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+
+        .footer-links h3, .footer-social h3, .footer-contact h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links ul li a {
+            opacity: 0.8;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-links ul li a:hover {
+            opacity: 1;
+            color: var(--secondary-color);
+            transform: translateX(5px);
+        }
+
+        .footer-links ul li a i {
+            width: 20px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+
+        .footer-contact p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        .copyright {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+            box-shadow: var(--shadow);
+        }
+
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: #ff6a47;
+            transform: translateY(-5px);
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: white;
+            width: 90%;
+            max-width: 500px;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            position: relative;
+            transform: translateY(-50px);
+            transition: var(--transition);
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #777;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--secondary-color);
+        }
+
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .modal-form input, .modal-form select {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        /* Tool Detail Page Styles */
+        .tool-detail-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 2000;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .tool-detail-page.active {
+            display: block;
+        }
+
+        .tool-detail-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 30px 0;
+            margin-bottom: 2rem;
+        }
+
+        .tool-detail-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .tool-detail-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .close-tool-detail {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+            z-index: 2001;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1100px) {
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero-search {
+                flex-direction: column;
+            }
+            
+            .hero-search input, .hero-search button {
+                width: 100%;
+                border-radius: 5px;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                box-shadow: var(--shadow);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: var(--transition);
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .dropdown-content {
+                position: static;
+                box-shadow: none;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                padding-left: 20px;
+                display: none;
+            }
+
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .user-actions {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 150px 0 80px;
+                background-attachment: scroll;
+            }
+
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .newsletter-form input {
+                border-radius: 30px;
+                margin-bottom: 10px;
+            }
+
+            .newsletter-form button {
+                border-radius: 30px;
+                width: 100%;
+            }
+
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .destination-grid, .story-container, .tools-container {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .user-actions {
+                flex-direction: column;
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            .user-actions a {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Advanced Navigation -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-globe-americas"></i>
+                Global<span>Explorer</span>
+            </a>
+            
+            <div class="nav-main">
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+                        
+                        <li class="dropdown">
+                            <a href="#"><i class="fas fa-map-marked-alt"></i> Destinations <i class="fas fa-chevron-down"></i></a>
+                            <div class="dropdown-content">
+                                <a href="#" class="destination-filter" data-type="adventure"><i class="fas fa-mountain"></i> Adventure Travel</a>
+                                <a href="#" class="destination-filter" data-type="beach"><i class="fas fa-umbrella-beach"></i> Beach Holidays</a>
+                                <a href="#" class="destination-filter" data-type="city"><i class="fas fa-city"></i> City Breaks</a>
+                                <a href="#" class="destination-filter" data-type="hiking"><i class="fas fa-hiking"></i> Trekking & Hiking</a>
+                                <a href="#" class="destination-filter" data-type="eco"><i class="fas fa-leaf"></i> Eco Tourism</a>
+                                <a href="#" class="destination-filter" data-type="food"><i class="fas fa-utensils"></i> Food & Culinary</a>
+                            </div>
+                        </li>
+                        
+                        <li class="dropdown">
+                            <a href="#"><i class="fas fa-tools"></i> Travel Tools <i class="fas fa-chevron-down"></i></a>
+                            <div class="dropdown-content">
+                                <a href="#" id="budgetCalculatorBtn"><i class="fas fa-calculator"></i> Budget Calculator</a>
+                                <a href="#" id="itineraryPlannerBtn"><i class="fas fa-route"></i> Itinerary Planner</a>
+                                <a href="#" id="packingListBtn"><i class="fas fa-suitcase"></i> Packing List</a>
+                                <a href="#" id="currencyConverterBtn"><i class="fas fa-money-bill-wave"></i> Currency Converter</a>
+                                <a href="#" id="weatherCheckBtn"><i class="fas fa-cloud-sun"></i> Weather Check</a>
+                                <a href="#" id="languageGuideBtn"><i class="fas fa-language"></i> Language Guide</a>
+                            </div>
+                        </li>
+                        
+                        <li class="dropdown">
+                            <a href="#"><i class="fas fa-newspaper"></i> Resources <i class="fas fa-chevron-down"></i></a>
+                            <div class="dropdown-content">
+                                <a href="#" id="travelGuidesBtn"><i class="fas fa-book"></i> Travel Guides</a>
+                                <a href="#" id="travelTipsBtn"><i class="fas fa-lightbulb"></i> Travel Tips</a>
+                                <a href="#" id="photographyTipsBtn"><i class="fas fa-camera"></i> Photography Tips</a>
+                                <a href="#" id="visaInfoBtn"><i class="fas fa-passport"></i> Visa Information</a>
+                                <a href="#" id="travelInsuranceBtn"><i class="fas fa-shield-alt"></i> Travel Insurance</a>
+                                <a href="#" id="healthSafetyBtn"><i class="fas fa-first-aid"></i> Health & Safety</a>
+                            </div>
+                        </li>
+                        
+                        <li><a href="#stories"><i class="fas fa-feather-alt"></i> Stories</a></li>
+                        <li><a href="#about"><i class="fas fa-info-circle"></i> About</a></li>
+                        <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="user-actions">
+                    <a href="#" class="login-btn" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a href="#" class="signup-btn" id="signupBtn"><i class="fas fa-user-plus"></i> Sign Up</a>
+                </div>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Discover The World With Confidence</h1>
+                <p>Your ultimate travel companion for exploring breathtaking destinations, planning perfect itineraries, and connecting with fellow travelers worldwide. Get expert tips, tools, and inspiration for your next adventure.</p>
+                <a href="#destinations" class="btn btn-primary">Start Exploring</a>
+                <a href="#" class="btn btn-accent" id="planTripBtn">Plan Your Trip</a>
+                
+                <div class="hero-search">
+                    <input type="text" placeholder="Search destinations, stories, or tips..." id="searchInput">
+                    <button id="searchBtn"><i class="fas fa-search"></i> Search</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-number" id="destinationsCount">150+</div>
+                    <div class="stat-text">Destinations Covered</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="storiesCount">850+</div>
+                    <div class="stat-text">Travel Stories</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="travelersCount">25K+</div>
+                    <div class="stat-text">Community Members</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="countriesCount">75+</div>
+                    <div class="stat-text">Countries Explored</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Destinations -->
+    <section class="destinations section-padding" id="destinations">
+        <div class="container">
+            <h2 class="section-title">Top Destinations This Season</h2>
+            <div class="destination-grid">
+                <!-- Destination cards will be dynamically loaded -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Travel Tools Section -->
+    <section class="tools section-padding">
+        <div class="container">
+            <h2 class="section-title">Travel Planning Tools</h2>
+            <div class="tools-container">
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Budget Calculator</h3>
+                    <p>Estimate costs for flights, accommodation, food, and activities for your trip.</p>
+                    <a href="#" class="btn btn-primary" id="budgetToolBtn">Use Tool</a>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <h3>Itinerary Planner</h3>
+                    <p>Create and optimize your daily travel schedule with our smart planner.</p>
+                    <a href="#" class="btn btn-primary" id="itineraryToolBtn">Use Tool</a>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-suitcase"></i>
+                    </div>
+                    <h3>Packing Assistant</h3>
+                    <p>Get personalized packing lists based on destination, season, and activities.</p>
+                    <a href="#" class="btn btn-primary" id="packingToolBtn">Use Tool</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Travel Stories -->
+    <section class="stories section-padding" id="stories">
+        <div class="container">
+            <h2 class="section-title">Featured Travel Stories</h2>
+            <div class="story-container">
+                <!-- Stories will be dynamically loaded -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter section-padding" id="contact">
+        <div class="container">
+            <h2 class="section-title">Join Our Travel Community</h2>
+            <p>Subscribe to our newsletter to receive weekly travel inspiration, exclusive guides, member discounts, and the latest travel news.</p>
+            <form class="newsletter-form" id="newsletterForm">
+                <input type="email" placeholder="Enter your email address" required>
+                <button type="submit">Subscribe Now</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <i class="fas fa-globe-americas"></i>
+                        Global<span>Explorer</span>
+                    </div>
+                    <p>We're a community of passionate travelers sharing stories, tips, and tools to make travel planning easier and more enjoyable for everyone. Join us in exploring our beautiful planet!</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-link" data-platform="facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link" data-platform="twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link" data-platform="instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link" data-platform="pinterest"><i class="fab fa-pinterest"></i></a>
+                        <a href="#" class="social-link" data-platform="youtube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-link" data-platform="tiktok"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#destinations"><i class="fas fa-chevron-right"></i> Destinations</a></li>
+                        <li><a href="#stories"><i class="fas fa-chevron-right"></i> Travel Stories</a></li>
+                        <li><a href="#" class="resource-link" data-resource="guides"><i class="fas fa-chevron-right"></i> Travel Guides</a></li>
+                        <li><a href="#" class="resource-link" data-resource="tips"><i class="fas fa-chevron-right"></i> Travel Tips</a></li>
+                        <li><a href="#about"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Travel Tools</h3>
+                    <ul>
+                        <li><a href="#" class="tool-link" data-tool="budget"><i class="fas fa-chevron-right"></i> Budget Calculator</a></li>
+                        <li><a href="#" class="tool-link" data-tool="itinerary"><i class="fas fa-chevron-right"></i> Itinerary Planner</a></li>
+                        <li><a href="#" class="tool-link" data-tool="packing"><i class="fas fa-chevron-right"></i> Packing List</a></li>
+                        <li><a href="#" class="tool-link" data-tool="currency"><i class="fas fa-chevron-right"></i> Currency Converter</a></li>
+                        <li><a href="#" class="tool-link" data-tool="weather"><i class="fas fa-chevron-right"></i> Weather Check</a></li>
+                        <li><a href="#" class="tool-link" data-tool="language"><i class="fas fa-chevron-right"></i> Language Guide</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Travel Street, Adventure City, AC 12345</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> info@globalexplorer.com</p>
+                    <p><i class="fas fa-clock"></i> Mon-Fri: 9am-6pm</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Global Explorer Travel Blog. All rights reserved. | <a href="#" id="privacyPolicyBtn">Privacy Policy</a> | <a href="#" id="termsServiceBtn">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Login to Your Account</h2>
+                <button class="close-modal" id="closeLoginModal">&times;</button>
+            </div>
+            <form class="modal-form" id="loginForm">
+                <input type="email" placeholder="Email Address" required id="loginEmail">
+                <input type="password" placeholder="Password" required id="loginPassword">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" id="rememberMe"> Remember me
+                    </label>
+                    <a href="#" id="forgotPasswordBtn" style="color: var(--primary-color); font-size: 0.9rem;">Forgot Password?</a>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <p style="text-align: center; margin-top: 1rem;">Don't have an account? <a href="#" id="showSignupModal" style="color: var(--secondary-color); font-weight: 600;">Sign Up</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create Your Account</h2>
+                <button class="close-modal" id="closeSignupModal">&times;</button>
+            </div>
+            <form class="modal-form" id="signupForm">
+                <div style="display: flex; gap: 1rem;">
+                    <input type="text" placeholder="First Name" required style="flex: 1;" id="firstName">
+                    <input type="text" placeholder="Last Name" required style="flex: 1;" id="lastName">
+                </div>
+                <input type="email" placeholder="Email Address" required id="signupEmail">
+                <input type="password" placeholder="Password" required id="signupPassword">
+                <input type="password" placeholder="Confirm Password" required id="confirmPassword">
+                <select required id="travelInterest">
+                    <option value="">Select Travel Interest</option>
+                    <option value="adventure">Adventure Travel</option>
+                    <option value="beach">Beach Holidays</option>
+                    <option value="culture">Cultural Experiences</option>
+                    <option value="food">Food & Culinary</option>
+                    <option value="nature">Nature & Wildlife</option>
+                </select>
+                <label style="display: flex; align-items: center; gap: 5px; margin-bottom: 1rem;">
+                    <input type="checkbox" required id="agreeTerms"> I agree to the <a href="#" id="termsLink" style="color: var(--primary-color);">Terms of Service</a> and <a href="#" id="privacyLink" style="color: var(--primary-color);">Privacy Policy</a>
+                </label>
+                <button type="submit" class="btn btn-accent">Create Account</button>
+                <p style="text-align: center; margin-top: 1rem;">Already have an account? <a href="#" id="showLoginModal" style="color: var(--secondary-color); font-weight: 600;">Login</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tool Detail Pages -->
+    <div class="tool-detail-page" id="budgetCalculatorPage">
+        <div class="tool-detail-header">
+            <div class="container">
+                <button class="close-tool-detail" data-tool="budget">&times;</button>
+                <h1>Budget Calculator</h1>
+                <p>Plan your travel expenses with our comprehensive budget calculator</p>
+            </div>
+        </div>
+        <div class="tool-detail-container">
+            <div class="tool-detail-content">
+                <h2>Calculate Your Travel Budget</h2>
+                <p>Use this tool to estimate your travel expenses based on destination, duration, and travel style.</p>
+                
+                <form id="detailedBudgetForm" style="margin-top: 2rem;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                        <div>
+                            <label for="budgetDest">Destination</label>
+                            <input type="text" id="budgetDest" placeholder="Where are you going?" required>
+                        </div>
+                        <div>
+                            <label for="budgetDays">Number of Days</label>
+                            <input type="number" id="budgetDays" placeholder="How many days?" min="1" value="7" required>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 1rem;">
+                        <label for="budgetTravelers">Number of Travelers</label>
+                        <input type="number" id="budgetTravelers" placeholder="How many people?" min="1" value="1" required>
+                    </div>
+                    
+                    <div style="margin-bottom: 1rem;">
+                        <label>Accommodation Type</label>
+                        <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                            <label style="flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 5px; text-align: center; cursor: pointer;">
+                                <input type="radio" name="accommodation" value="budget" checked> Budget ($30-50/night)
+                            </label>
+                            <label style="flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 5px; text-align: center; cursor: pointer;">
+                                <input type="radio" name="accommodation" value="mid"> Mid-range ($70-120/night)
+                            </label>
+                            <label style="flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 5px; text-align: center; cursor: pointer;">
+                                <input type="radio" name="accommodation" value="luxury"> Luxury ($150+/night)
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 1rem;">
+                        <label>Meal Budget Per Day</label>
+                        <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                            <label style="flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 5px; text-align: center; cursor: pointer;">
+                                <input type="radio" name="meals" value="budget" checked> Budget ($15-25/day)
+                            </label>
+                            <label style="flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 5px; text-align: center; cursor: pointer;">
+                                <input type="radio" name="meals" value="mid"> Mid-range ($30-50/day)
+                            </label>
+                            <label style="flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 5px; text-align: center; cursor: pointer;">
+                                <input type="radio" name="meals" value="luxury"> Luxury ($75+/day)
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 1rem;">
+                        <label>Transportation</label>
+                        <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                            <label style="flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 5px; text-align: center; cursor: pointer;">
+                                <input type="radio" name="transport" value="budget" checked> Public Transport ($10/day)
+                            </label>
+                            <label style="flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 5px; text-align: center; cursor: pointer;">
+                                <input type="radio" name="transport" value="mid"> Rental Car ($40/day)
+                            </label>
+                            <label style="flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 5px; text-align: center; cursor: pointer;">
+                                <input type="radio" name="transport" value="luxury"> Private Driver ($100+/day)
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div id="budgetResultDetailed" style="background-color: #f8f9fa; padding: 1.5rem; border-radius: var(--border-radius); margin: 2rem 0; display: none;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Estimated Budget Breakdown</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div>
+                                <p><strong>Accommodation:</strong> <span id="accCost">$0</span></p>
+                                <p><strong>Food & Dining:</strong> <span id="foodCostDetailed">$0</span></p>
+                                <p><strong>Transportation:</strong> <span id="transCost">$0</span></p>
+                                <p><strong>Activities:</strong> <span id="actCost">$0</span></p>
+                            </div>
+                            <div style="background-color: var(--primary-color); color: white; padding: 1rem; border-radius: var(--border-radius);">
+                                <h4 style="margin-bottom: 0.5rem;">Total Estimated Cost</h4>
+                                <p style="font-size: 2rem; font-weight: bold;" id="totalCostDetailed">$0</p>
+                                <p style="font-size: 0.9rem;">Per person: <span id="perPersonCost">$0</span></p>
+                            </div>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <p><strong>Tips:</strong> Consider adding 10-15% for unexpected expenses and souvenirs.</p>
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="btn btn-primary" id="calculateDetailedBudgetBtn" style="width: 100%; padding: 15px;">Calculate Budget</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Itinerary Planner Page -->
+    <div class="tool-detail-page" id="itineraryPlannerPage">
+        <div class="tool-detail-header">
+            <div class="container">
+                <button class="close-tool-detail" data-tool="itinerary">&times;</button>
+                <h1>Itinerary Planner</h1>
+                <p>Plan your perfect trip day by day</p>
+            </div>
+        </div>
+        <div class="tool-detail-container">
+            <div class="tool-detail-content">
+                <h2>Create Your Travel Itinerary</h2>
+                <p>Plan your daily activities, meals, and transportation for a seamless travel experience.</p>
+                
+                <div style="margin-top: 2rem;">
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                        <input type="text" placeholder="Destination" id="itineraryDestination" style="flex: 1; padding: 12px;">
+                        <input type="text" placeholder="Trip Name" id="tripName" style="flex: 1; padding: 12px;">
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                        <input type="date" id="startDate" style="flex: 1; padding: 12px;">
+                        <input type="date" id="endDate" style="flex: 1; padding: 12px;">
+                    </div>
+                    
+                    <div id="itineraryDaysContainer">
+                        <!-- Days will be added here -->
+                    </div>
+                    
+                    <div style="margin-top: 1rem;">
+                        <button type="button" class="btn btn-accent" id="addNewDayBtn"><i class="fas fa-plus"></i> Add Another Day</button>
+                        <button type="button" class="btn btn-primary" id="saveItineraryBtn" style="margin-left: 1rem;">Save Itinerary</button>
+                    </div>
+                    
+                    <div id="itineraryPreviewContainer" style="margin-top: 2rem; background-color: #f8f9fa; padding: 1.5rem; border-radius: var(--border-radius); display: none;">
+                        <h3>Your Itinerary Preview</h3>
+                        <div id="itineraryPreviewContent">
+                            <!-- Preview will be shown here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Packing List Page -->
+    <div class="tool-detail-page" id="packingListPage">
+        <div class="tool-detail-header">
+            <div class="container">
+                <button class="close-tool-detail" data-tool="packing">&times;</button>
+                <h1>Packing List Generator</h1>
+                <p>Create a personalized packing list for your trip</p>
+            </div>
+        </div>
+        <div class="tool-detail-container">
+            <div class="tool-detail-content">
+                <h2>Generate Your Packing List</h2>
+                <p>Get a customized packing list based on your destination, trip type, and duration.</p>
+                
+                <form id="packingListForm" style="margin-top: 2rem;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                        <div>
+                            <label for="packingDestination">Destination</label>
+                            <input type="text" id="packingDestination" placeholder="Where are you going?" required>
+                        </div>
+                        <div>
+                            <label for="tripDuration">Trip Duration</label>
+                            <select id="tripDuration" required>
+                                <option value="">Select Duration</option>
+                                <option value="weekend">Weekend (2-3 days)</option>
+                                <option value="week">One Week</option>
+                                <option value="twoWeeks">Two Weeks</option>
+                                <option value="month">One Month+</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 1rem;">
+                        <label>Trip Type</label>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-top: 0.5rem;">
+                            <label style="padding: 10px; border: 2px solid #ddd; border-radius: 5px; text-align: center; cursor: pointer;">
+                                <input type="radio" name="tripType" value="beach"> Beach
+                            </label>
+                            <label style="padding: 10px; border: 2px solid #ddd; border-radius: 5px; text-align: center; cursor: pointer;">
+                                <input type="radio" name="tripType" value="city"> City Break
+                            </label>
+                            <label style="padding: 10px; border: 2px solid #ddd; border-radius: 5px; text-align: center; cursor: pointer;">
+                                <input type="radio" name="tripType" value="hiking"> Hiking
+                            </label>
+                            <label style="padding: 10px; border: 2px solid #ddd; border-radius: 5px; text-align: center; cursor: pointer;">
+                                <input type="radio" name="tripType" value="business"> Business
+                            </label>
+                            <label style="padding: 10px; border: 2px solid #ddd; border-radius: 5px; text-align: center; cursor: pointer;">
+                                <input type="radio" name="tripType" value="winter"> Winter Sports
+                            </label>
+                            <label style="padding: 10px; border: 2px solid #ddd; border-radius: 5px; text-align: center; cursor: pointer;">
+                                <input type="radio" name="tripType" value="camping"> Camping
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 1rem;">
+                        <label>Season/Weather</label>
+                        <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                            <label style="flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 5px; text-align: center; cursor: pointer;">
+                                <input type="radio" name="season" value="summer"> Summer
+                            </label>
+                            <label style="flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 5px; text-align: center; cursor: pointer;">
+                                <input type="radio" name="season" value="winter"> Winter
+                            </label>
+                            <label style="flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 5px; text-align: center; cursor: pointer;">
+                                <input type="radio" name="season" value="spring"> Spring
+                            </label>
+                            <label style="flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 5px; text-align: center; cursor: pointer;">
+                                <input type="radio" name="season" value="fall"> Fall
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div id="packingListResult" style="background-color: #f8f9fa; padding: 1.5rem; border-radius: var(--border-radius); margin: 2rem 0; display: none;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Your Personalized Packing List</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                            <div>
+                                <h4>Essentials</h4>
+                                <div id="essentialsList"></div>
+                            </div>
+                            <div>
+                                <h4>Clothing</h4>
+                                <div id="clothingList"></div>
+                            </div>
+                            <div>
+                                <h4>Toiletries</h4>
+                                <div id="toiletriesList"></div>
+                            </div>
+                            <div>
+                                <h4>Accessories & Electronics</h4>
+                                <div id="accessoriesList"></div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #ddd;">
+                            <p><strong>Pro Tip:</strong> Roll your clothes instead of folding to save space and prevent wrinkles.</p>
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="btn btn-primary" id="generatePackingListBtn" style="width: 100%; padding: 15px;">Generate Packing List</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data for destinations and stories
+        const destinationsData = [
+            {
+                id: 1,
+                name: "Santorini",
+                country: "Greece",
+                description: "Famous for its dramatic views, stunning sunsets, and white-washed buildings with blue domes overlooking the Aegean Sea.",
+                image: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-4.0.3&auto=format&fit=crop&w=686&q=80",
+                badge: "Popular",
+                type: "beach",
+                season: "Summer",
+                days: 7,
+                cost: "$$$",
+                details: {
+                    bestTime: "April to October",
+                    language: "Greek",
+                    currency: "Euro (€)",
+                    highlights: ["Oia Sunset", "Red Beach", "Ancient Thera", "Wine Tasting"],
+                    tips: ["Book accommodations early", "Rent an ATV for transportation", "Try local seafood"]
+                }
+            },
+            {
+                id: 2,
+                name: "Kyoto",
+                country: "Japan",
+                description: "Known for its numerous classical Buddhist temples, as well as gardens, imperial palaces, and traditional wooden houses.",
+                image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80",
+                badge: "Cultural",
+                type: "city",
+                season: "Spring",
+                days: 10,
+                cost: "$$",
+                details: {
+                    bestTime: "March to May, September to November",
+                    language: "Japanese",
+                    currency: "Yen (¥)",
+                    highlights: ["Fushimi Inari Shrine", "Kinkaku-ji Temple", "Arashiyama Bamboo Grove", "Gion District"],
+                    tips: ["Get a Japan Rail Pass", "Visit temples early to avoid crowds", "Try kaiseki cuisine"]
+                }
+            },
+            {
+                id: 3,
+                name: "Machu Picchu",
+                country: "Peru",
+                description: "An ancient Incan city set high in the Andes Mountains, renowned for its sophisticated dry-stone walls and panoramic views.",
+                image: "https://images.unsplash.com/photo-1513326738677-b964603b136d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80",
+                badge: "Adventure",
+                type: "hiking",
+                season: "Dry Season",
+                days: 5,
+                cost: "$$",
+                details: {
+                    bestTime: "May to September",
+                    language: "Spanish, Quechua",
+                    currency: "Sol (S/)",
+                    highlights: ["Sun Gate", "Huayna Picchu", "Temple of the Sun", "Inca Bridge"],
+                    tips: ["Acclimate to altitude first", "Book permits months in advance", "Hire a local guide"]
+                }
+            },
+            {
+                id: 4,
+                name: "Swiss Alps",
+                country: "Switzerland",
+                description: "Majestic mountains, pristine lakes, and charming villages offering world-class hiking and skiing opportunities.",
+                image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80",
+                badge: "Adventure",
+                type: "hiking",
+                season: "Year-round",
+                days: 7,
+                cost: "$$$",
+                details: {
+                    bestTime: "June to September (hiking), December to March (skiing)",
+                    language: "German, French, Italian",
+                    currency: "Swiss Franc (CHF)",
+                    highlights: ["Jungfraujoch", "Matterhorn", "Lake Geneva", "Bernese Oberland"],
+                    tips: ["Get a Swiss Travel Pass", "Pack layers for changing weather", "Try cheese fondue"]
+                }
+            },
+            {
+                id: 5,
+                name: "Bali",
+                country: "Indonesia",
+                description: "A tropical paradise known for its forested volcanic mountains, iconic rice paddies, beaches and coral reefs.",
+                image: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80",
+                badge: "Beach",
+                type: "beach",
+                season: "Dry Season",
+                days: 14,
+                cost: "$",
+                details: {
+                    bestTime: "April to October",
+                    language: "Indonesian, Balinese",
+                    currency: "Indonesian Rupiah (Rp)",
+                    highlights: ["Ubud Rice Terraces", "Uluwatu Temple", "Tanah Lot", "Mount Batur"],
+                    tips: ["Rent a scooter for mobility", "Respect temple dress codes", "Try local warungs for authentic food"]
+                }
+            },
+            {
+                id: 6,
+                name: "Maasai Mara Safari",
+                country: "Kenya",
+                description: "Experience the breathtaking wildlife and landscapes of the Maasai Mara during the great migration season.",
+                image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=1168&q=80",
+                badge: "Wildlife",
+                type: "eco",
+                season: "Migration",
+                days: 10,
+                cost: "$$$",
+                details: {
+                    bestTime: "July to October (Great Migration)",
+                    language: "Swahili, English",
+                    currency: "Kenyan Shilling (KSh)",
+                    highlights: ["Great Migration", "Big Five Safari", "Hot Air Balloon Ride", "Maasai Village Visit"],
+                    tips: ["Book safari lodges early", "Bring binoculars and camera", "Pack neutral-colored clothing"]
+                }
+            }
+        ];
+
+        const storiesData = [
+            {
+                id: 1,
+                title: "Hiking the Swiss Alps: A Journey Above the Clouds",
+                author: "Sarah Johnson",
+                date: "May 15, 2023",
+                description: "An unforgettable two-week trek through the Swiss Alps, experiencing breathtaking views and charming mountain villages.",
+                fullContent: "My journey through the Swiss Alps began in Interlaken, a picturesque town nestled between two crystal-clear lakes. Over the next 14 days, I hiked through some of the most stunning landscapes I've ever seen, including the Eiger Trail and the path to Jungfraujoch, the 'Top of Europe'. Each day brought new challenges and rewards, from crossing suspension bridges over deep gorges to enjoying hearty Swiss meals in cozy mountain huts. The highlight was reaching the summit of Schilthorn at 2,970 meters, where the 360-degree panorama of snow-capped peaks took my breath away.",
+                image: "https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80",
+                avatar: "https://randomuser.me/api/portraits/women/32.jpg",
+                readTime: "8 min read",
+                category: "Adventure",
+                likes: 245,
+                comments: 32
+            },
+            {
+                id: 2,
+                title: "Bangkok Street Food Tour: A Culinary Adventure",
+                author: "Michael Chen",
+                date: "April 22, 2023",
+                description: "Exploring the vibrant street food scene in Bangkok, from pad thai to mango sticky rice and everything in between.",
+                fullContent: "Bangkok's street food is legendary, and I spent 10 days trying to sample as much of it as possible. My culinary journey took me through bustling markets like Chatuchak Weekend Market and Chinatown's Yaowarat Road. I discovered that each neighborhood has its specialties - from the boat noodle alley near Victory Monument to the seafood stalls along Soi 38 in Sukhumvit. I learned to appreciate the complex flavors of authentic Thai cuisine, from the fiery heat of som tam (green papaya salad) to the sweet creaminess of mango sticky rice. The most memorable meal was a humble bowl of khao soi from a tiny stall in the Old City, which I still dream about.",
+                image: "https://images.unsplash.com/photo-1534008897995-27a23e859048?ixlib=rb-4.0.3&auto=format&fit=crop&w=1174&q=80",
+                avatar: "https://randomuser.me/api/portraits/men/54.jpg",
+                readTime: "6 min read",
+                category: "Food",
+                likes: 189,
+                comments: 28
+            },
+            {
+                id: 3,
+                title: "Kenyan Safari: Witnessing the Great Migration",
+                author: "David Okello",
+                date: "March 30, 2023",
+                description: "A life-changing experience observing the annual migration of wildebeest and zebras across the Maasai Mara.",
+                fullContent: "As a Kenyan, I thought I knew what to expect from a safari, but nothing prepared me for the awe-inspiring spectacle of the Great Migration. I spent a week in the Maasai Mara National Reserve during peak migration season, witnessing thousands of wildebeest and zebra crossing the Mara River. The tension was palpable as crocodiles lurked in the waters, waiting for an opportunity. Beyond the migration, I had incredible encounters with the Big Five - lions, leopards, elephants, rhinos, and buffalo. One magical morning, we watched a cheetah mother teaching her cubs to hunt. The experience deepened my appreciation for Kenya's wildlife and the importance of conservation efforts.",
+                image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=1168&q=80",
+                avatar: "https://randomuser.me/api/portraits/men/22.jpg",
+                readTime: "10 min read",
+                category: "Wildlife",
+                likes: 312,
+                comments: 45
+            }
+        ];
+
+        // Application State
+        let currentUser = null;
+        let itineraryDays = 1;
+        let currentItinerary = [];
+        let filteredDestinations = [...destinationsData];
+
+        // DOM Elements
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.querySelector('.nav-links');
+        const backToTop = document.querySelector('.back-to-top');
+        const loginBtn = document.getElementById('loginBtn');
+        const signupBtn = document.getElementById('signupBtn');
+        const loginModal = document.getElementById('loginModal');
+        const signupModal = document.getElementById('signupModal');
+        const closeLoginModal = document.getElementById('closeLoginModal');
+        const closeSignupModal = document.getElementById('closeSignupModal');
+        const showSignupModal = document.getElementById('showSignupModal');
+        const showLoginModal = document.getElementById('showLoginModal');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchInput = document.getElementById('searchInput');
+        const planTripBtn = document.getElementById('planTripBtn');
+        const newsletterForm = document.getElementById('newsletterForm');
+        const destinationGrid = document.querySelector('.destination-grid');
+        const storyContainer = document.querySelector('.story-container');
+        
+        // Tool pages
+        const budgetCalculatorPage = document.getElementById('budgetCalculatorPage');
+        const itineraryPlannerPage = document.getElementById('itineraryPlannerPage');
+        const packingListPage = document.getElementById('packingListPage');
+        
+        // Tool buttons
+        const toolButtons = {
+            budget: ['budgetCalculatorBtn', 'budgetToolBtn'],
+            itinerary: ['itineraryPlannerBtn', 'itineraryToolBtn'],
+            packing: ['packingListBtn', 'packingToolBtn'],
+            currency: ['currencyConverterBtn'],
+            weather: ['weatherCheckBtn'],
+            language: ['languageGuideBtn']
+        };
+        
+        // Resource buttons
+        const resourceButtons = [
+            'travelGuidesBtn', 'travelTipsBtn', 'photographyTipsBtn',
+            'visaInfoBtn', 'travelInsuranceBtn', 'healthSafetyBtn'
+        ];
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load initial content
+            loadDestinations();
+            loadStories();
+            animateCounters();
+            setupEventListeners();
+            setupDestinationFilters();
+            setupToolButtons();
+            setupResourceButtons();
+            setupFooterLinks();
+        });
+
+        function loadDestinations() {
+            destinationGrid.innerHTML = '';
+            filteredDestinations.forEach(destination => {
+                const destinationCard = document.createElement('div');
+                destinationCard.className = 'destination-card';
+                destinationCard.innerHTML = `
+                    <div class="destination-badge">${destination.badge}</div>
+                    <img src="${destination.image}" alt="${destination.name}, ${destination.country}" class="destination-img">
+                    <div class="destination-info">
+                        <h3>${destination.name}</h3>
+                        <p class="location"><i class="fas fa-map-marker-alt"></i> ${destination.country}</p>
+                        <p>${destination.description}</p>
+                        <div class="destination-meta">
+                            <span><i class="far fa-calendar"></i> Best in ${destination.season}</span>
+                            <span><i class="fas fa-wallet"></i> ${destination.cost}</span>
+                            <span><i class="far fa-clock"></i> ${destination.days} days</span>
+                        </div>
+                        <button class="btn btn-primary view-destination-details" data-id="${destination.id}" style="margin-top: 1rem; display: inline-block;">View Details</button>
+                    </div>
+                `;
+                destinationGrid.appendChild(destinationCard);
+            });
+            
+            // Add event listeners to destination buttons
+            document.querySelectorAll('.view-destination-details').forEach(button => {
+                button.addEventListener('click', function() {
+                    const destinationId = parseInt(this.getAttribute('data-id'));
+                    showDestinationDetails(destinationId);
+                });
+            });
+        }
+
+        function loadStories() {
+            storyContainer.innerHTML = '';
+            storiesData.forEach(story => {
+                const storyCard = document.createElement('div');
+                storyCard.className = 'story-card';
+                storyCard.innerHTML = `
+                    <img src="${story.image}" alt="${story.title}" class="story-img">
+                    <div class="story-content">
+                        <div class="story-meta">
+                            <span><i class="far fa-clock"></i> ${story.readTime}</span>
+                            <span><i class="fas fa-tag"></i> ${story.category}</span>
+                        </div>
+                        <h3>${story.title}</h3>
+                        <p>${story.description}</p>
+                        <div class="story-author">
+                            <img src="${story.avatar}" alt="${story.author}" class="author-avatar">
+                            <div>
+                                <div style="font-weight: 600;">${story.author}</div>
+                                <div style="font-size: 0.9rem; color: #777;">${story.date}</div>
+                            </div>
+                        </div>
+                        <button class="btn btn-accent read-full-story" data-id="${story.id}" style="margin-top: 1rem; display: inline-block;">Read Full Story</button>
+                    </div>
+                `;
+                storyContainer.appendChild(storyCard);
+            });
+            
+            // Add event listeners to story buttons
+            document.querySelectorAll('.read-full-story').forEach(button => {
+                button.addEventListener('click', function() {
+                    const storyId = parseInt(this.getAttribute('data-id'));
+                    showFullStory(storyId);
+                });
+            });
+        }
+
+        function animateCounters() {
+            const stats = [
+                { id: 'destinationsCount', target: 150, duration: 2000 },
+                { id: 'storiesCount', target: 850, duration: 2000 },
+                { id: 'travelersCount', target: 25000, duration: 2000 },
+                { id: 'countriesCount', target: 75, duration: 2000 }
+            ];
+
+            stats.forEach(stat => {
+                const element = document.getElementById(stat.id);
+                const target = stat.target;
+                const duration = stat.duration;
+                const increment = target / (duration / 16);
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    
+                    if (target > 1000) {
+                        element.textContent = Math.floor(current).toLocaleString() + '+';
+                    } else {
+                        element.textContent = Math.floor(current) + '+';
+                    }
+                }, 16);
+            });
+        }
+
+        function setupEventListeners() {
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                    ? '<i class="fas fa-times"></i>' 
+                    : '<i class="fas fa-bars"></i>';
+            });
+
+            // Close mobile menu when clicking on a link
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
+
+            // Back to Top Button
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTop.classList.add('active');
+                } else {
+                    backToTop.classList.remove('active');
+                }
+            });
+
+            // Back to top functionality
+            backToTop.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Modal handling
+            loginBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+
+            signupBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                signupModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+
+            closeLoginModal.addEventListener('click', () => {
+                loginModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+
+            closeSignupModal.addEventListener('click', () => {
+                signupModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+
+            showSignupModal.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginModal.classList.remove('active');
+                signupModal.classList.add('active');
+            });
+
+            showLoginModal.addEventListener('click', (e) => {
+                e.preventDefault();
+                signupModal.classList.remove('active');
+                loginModal.classList.add('active');
+            });
+
+            // Close modals when clicking outside
+            [loginModal, signupModal].forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            });
+
+            // Search functionality
+            searchBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                performSearch();
+            });
+
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    performSearch();
+                }
+            });
+
+            // Plan trip button
+            planTripBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToolPage('itinerary');
+            });
+
+            // Newsletter form
+            newsletterForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const emailInput = newsletterForm.querySelector('input[type="email"]');
+                if (emailInput.value) {
+                    showNotification(`Thank you for subscribing with email: ${emailInput.value}! You'll receive our weekly newsletter starting next week.`);
+                    emailInput.value = '';
+                }
+            });
+
+            // Login form
+            document.getElementById('loginForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                if (email && password) {
+                    // Simulate login
+                    currentUser = {
+                        email: email,
+                        name: email.split('@')[0]
+                    };
+                    
+                    showNotification(`Welcome back, ${currentUser.name}! Login successful.`);
+                    loginModal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    
+                    // Update UI for logged in user
+                    loginBtn.innerHTML = `<i class="fas fa-user"></i> ${currentUser.name}`;
+                    signupBtn.style.display = 'none';
+                }
+            });
+
+            // Signup form
+            document.getElementById('signupForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const firstName = document.getElementById('firstName').value;
+                const lastName = document.getElementById('lastName').value;
+                const email = document.getElementById('signupEmail').value;
+                const password = document.getElementById('signupPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                const interest = document.getElementById('travelInterest').value;
+                
+                if (password !== confirmPassword) {
+                    showNotification("Passwords don't match!", true);
+                    return;
+                }
+                
+                // Simulate signup
+                currentUser = {
+                    email: email,
+                    name: firstName,
+                    fullName: `${firstName} ${lastName}`,
+                    interest: interest
+                };
+                
+                showNotification(`Welcome to Global Explorer, ${firstName}! Your account has been created.`);
+                signupModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                
+                // Update UI for logged in user
+                loginBtn.innerHTML = `<i class="fas fa-user"></i> ${firstName}`;
+                signupBtn.style.display = 'none';
+            });
+
+            // Forgot password
+            document.getElementById('forgotPasswordBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                const email = prompt("Please enter your email address to reset your password:");
+                if (email) {
+                    showNotification(`Password reset instructions have been sent to ${email}`);
+                }
+            });
+
+            // Terms and Privacy links
+            document.getElementById('termsLink').addEventListener('click', (e) => {
+                e.preventDefault();
+                showTermsOfService();
+            });
+
+            document.getElementById('privacyLink').addEventListener('click', (e) => {
+                e.preventDefault();
+                showPrivacyPolicy();
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if(targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) {
+                        e.preventDefault();
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Close tool detail pages
+            document.querySelectorAll('.close-tool-detail').forEach(button => {
+                button.addEventListener('click', function() {
+                    const tool = this.getAttribute('data-tool');
+                    closeToolPage(tool);
+                });
+            });
+        }
+
+        function setupDestinationFilters() {
+            document.querySelectorAll('.destination-filter').forEach(filter => {
+                filter.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const type = filter.getAttribute('data-type');
+                    filterDestinations(type);
+                });
+            });
+        }
+
+        function setupToolButtons() {
+            // Setup all tool buttons
+            for (const [tool, buttonIds] of Object.entries(toolButtons)) {
+                buttonIds.forEach(buttonId => {
+                    const button = document.getElementById(buttonId);
+                    if (button) {
+                        button.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            showToolPage(tool);
+                        });
+                    }
+                });
+            }
+            
+            // Setup detailed budget calculator
+            document.getElementById('calculateDetailedBudgetBtn').addEventListener('click', calculateDetailedBudget);
+            
+            // Setup itinerary planner
+            document.getElementById('addNewDayBtn').addEventListener('click', addItineraryDay);
+            document.getElementById('saveItineraryBtn').addEventListener('click', saveItinerary);
+            
+            // Setup packing list
+            document.getElementById('generatePackingListBtn').addEventListener('click', generatePackingList);
+        }
+
+        function setupResourceButtons() {
+            resourceButtons.forEach(buttonId => {
+                const button = document.getElementById(buttonId);
+                if (button) {
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const resourceName = button.textContent.replace(' ', '');
+                        showResourceDetails(resourceName.toLowerCase());
+                    });
+                }
+            });
+        }
+
+        function setupFooterLinks() {
+            // Tool links in footer
+            document.querySelectorAll('.tool-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const tool = link.getAttribute('data-tool');
+                    showToolPage(tool);
+                });
+            });
+            
+            // Resource links in footer
+            document.querySelectorAll('.resource-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const resource = link.getAttribute('data-resource');
+                    showResourceDetails(resource);
+                });
+            });
+            
+            // Social links
+            document.querySelectorAll('.social-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const platform = link.getAttribute('data-platform');
+                    showSocialPlatform(platform);
+                });
+            });
+            
+            // Policy links
+            document.getElementById('privacyPolicyBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                showPrivacyPolicy();
+            });
+            
+            document.getElementById('termsServiceBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                showTermsOfService();
+            });
+        }
+
+        function performSearch() {
+            const query = searchInput.value.trim().toLowerCase();
+            if (!query) {
+                showNotification("Please enter a search term", true);
+                return;
+            }
+            
+            // Search in destinations
+            const destinationResults = destinationsData.filter(dest => 
+                dest.name.toLowerCase().includes(query) || 
+                dest.country.toLowerCase().includes(query) ||
+                dest.description.toLowerCase().includes(query) ||
+                dest.type.toLowerCase().includes(query)
+            );
+            
+            // Search in stories
+            const storyResults = storiesData.filter(story =>
+                story.title.toLowerCase().includes(query) ||
+                story.author.toLowerCase().includes(query) ||
+                story.description.toLowerCase().includes(query) ||
+                story.category.toLowerCase().includes(query) ||
+                story.fullContent.toLowerCase().includes(query)
+            );
+            
+            // Display search results
+            let resultMessage = `Search results for "${query}":\n`;
+            
+            if (destinationResults.length > 0) {
+                resultMessage += `\nFound ${destinationResults.length} destination(s):\n`;
+                destinationResults.forEach(dest => {
+                    resultMessage += `• ${dest.name}, ${dest.country}\n`;
+                });
+            }
+            
+            if (storyResults.length > 0) {
+                resultMessage += `\nFound ${storyResults.length} story/stories:\n`;
+                storyResults.forEach(story => {
+                    resultMessage += `• "${story.title}" by ${story.author}\n`;
+                });
+            }
+            
+            if (destinationResults.length === 0 && storyResults.length === 0) {
+                resultMessage += "\nNo results found. Try different keywords.";
+            }
+            
+            showNotification(resultMessage);
+            searchInput.value = '';
+        }
+
+        function filterDestinations(type) {
+            if (type === 'all') {
+                filteredDestinations = [...destinationsData];
+            } else {
+                filteredDestinations = destinationsData.filter(dest => dest.type === type);
+            }
+            
+            loadDestinations();
+            
+            // Scroll to destinations section
+            document.getElementById('destinations').scrollIntoView({ behavior: 'smooth' });
+            
+            // Show filter notification
+            const typeNames = {
+                'adventure': 'Adventure Travel',
+                'beach': 'Beach Holidays',
+                'city': 'City Breaks',
+                'hiking': 'Trekking & Hiking',
+                'eco': 'Eco Tourism',
+                'food': 'Food & Culinary'
+            };
+            
+            showNotification(`Showing ${typeNames[type] || type} destinations`);
+        }
+
+        function showDestinationDetails(id) {
+            const destination = destinationsData.find(d => d.id === id);
+            if (!destination) return;
+            
+            const detailsHtml = `
+                <div style="max-width: 800px; margin: 0 auto; background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--shadow);">
+                    <h2>${destination.name}, ${destination.country}</h2>
+                    <img src="${destination.image}" alt="${destination.name}" style="width: 100%; height: 300px; object-fit: cover; border-radius: var(--border-radius); margin: 1rem 0;">
+                    
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0;">
+                        <div style="background: #f8f9fa; padding: 1rem; border-radius: var(--border-radius); text-align: center;">
+                            <div style="font-weight: bold; color: var(--primary-color);">Best Time to Visit</div>
+                            <div>${destination.details.bestTime}</div>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 1rem; border-radius: var(--border-radius); text-align: center;">
+                            <div style="font-weight: bold; color: var(--primary-color);">Language</div>
+                            <div>${destination.details.language}</div>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 1rem; border-radius: var(--border-radius); text-align: center;">
+                            <div style="font-weight: bold; color: var(--primary-color);">Currency</div>
+                            <div>${destination.details.currency}</div>
+                        </div>
+                    </div>
+                    
+                    <h3>About ${destination.name}</h3>
+                    <p>${destination.description}</p>
+                    
+                    <h3>Top Highlights</h3>
+                    <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                        ${destination.details.highlights.map(h => `<li>${h}</li>`).join('')}
+                    </ul>
+                    
+                    <h3>Travel Tips</h3>
+                    <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                        ${destination.details.tips.map(t => `<li>${t}</li>`).join('')}
+                    </ul>
+                    
+                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <button class="btn btn-primary" onclick="addToItinerary(${destination.id})">
+                            <i class="fas fa-calendar-plus"></i> Add to Itinerary
+                        </button>
+                        <button class="btn btn-accent" onclick="showToolPage('budget')">
+                            <i class="fas fa-calculator"></i> Calculate Budget
+                        </button>
+                        <button class="btn" onclick="closeDetails()" style="background: #f8f9fa;">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            showModal('Destination Details', detailsHtml);
+        }
+
+        function showFullStory(id) {
+            const story = storiesData.find(s => s.id === id);
+            if (!story) return;
+            
+            const storyHtml = `
+                <div style="max-width: 800px; margin: 0 auto; background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--shadow);">
+                    <h2>${story.title}</h2>
+                    
+                    <div style="display: flex; align-items: center; gap: 1rem; margin: 1rem 0;">
+                        <img src="${story.avatar}" alt="${story.author}" style="width: 50px; height: 50px; border-radius: 50%;">
+                        <div>
+                            <div style="font-weight: bold;">${story.author}</div>
+                            <div style="color: #777; font-size: 0.9rem;">${story.date} • ${story.readTime}</div>
+                        </div>
+                    </div>
+                    
+                    <img src="${story.image}" alt="${story.title}" style="width: 100%; height: 400px; object-fit: cover; border-radius: var(--border-radius); margin: 1.5rem 0;">
+                    
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: var(--border-radius); margin: 1.5rem 0;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span><i class="fas fa-tag"></i> ${story.category}</span>
+                            <span><i class="far fa-thumbs-up"></i> ${story.likes} Likes</span>
+                            <span><i class="far fa-comment"></i> ${story.comments} Comments</span>
+                        </div>
+                    </div>
+                    
+                    <h3>Overview</h3>
+                    <p>${story.description}</p>
+                    
+                    <h3>Full Story</h3>
+                    <p>${story.fullContent}</p>
+                    
+                    <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #eee;">
+                        <h4>Comments (${story.comments})</h4>
+                        <div style="background: #f8f9fa; padding: 1rem; border-radius: var(--border-radius); margin: 1rem 0;">
+                            <p><strong>Traveler123:</strong> Amazing story! I'm planning a similar trip next year.</p>
+                            <p style="font-size: 0.9rem; color: #777; margin-top: 0.5rem;">2 days ago</p>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <textarea placeholder="Add a comment..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 0.5rem;"></textarea>
+                            <button class="btn btn-primary">Post Comment</button>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <button class="btn btn-primary" onclick="showNotification('Story added to your favorites!')">
+                            <i class="far fa-heart"></i> Save Story
+                        </button>
+                        <button class="btn" onclick="closeDetails()" style="background: #f8f9fa;">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            showModal('Travel Story', storyHtml);
+        }
+
+        function showToolPage(tool) {
+            // Hide all tool pages first
+            document.querySelectorAll('.tool-detail-page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show the requested tool page
+            const toolPages = {
+                'budget': budgetCalculatorPage,
+                'itinerary': itineraryPlannerPage,
+                'packing': packingListPage,
+                'currency': null,
+                'weather': null,
+                'language': null
+            };
+            
+            const toolPage = toolPages[tool];
+            
+            if (toolPage) {
+                toolPage.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                // Initialize the tool if needed
+                if (tool === 'itinerary') {
+                    initializeItineraryPlanner();
+                }
+            } else {
+                // For tools without dedicated pages, show a detailed modal
+                const toolDetails = {
+                    'currency': {
+                        title: 'Currency Converter',
+                        content: `
+                            <div style="max-width: 500px; margin: 0 auto;">
+                                <h3>Real-time Currency Converter</h3>
+                                <p>Convert between 150+ world currencies with live exchange rates.</p>
+                                
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0;">
+                                    <div>
+                                        <label>From</label>
+                                        <select style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                                            <option>US Dollar (USD)</option>
+                                            <option>Euro (EUR)</option>
+                                            <option>British Pound (GBP)</option>
+                                            <option>Japanese Yen (JPY)</option>
+                                        </select>
+                                        <input type="number" value="100" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-top: 0.5rem;">
+                                    </div>
+                                    <div>
+                                        <label>To</label>
+                                        <select style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                                            <option>Euro (EUR)</option>
+                                            <option>US Dollar (USD)</option>
+                                            <option>British Pound (GBP)</option>
+                                            <option>Japanese Yen (JPY)</option>
+                                        </select>
+                                        <div style="width: 100%; padding: 10px; background: #f8f9fa; border-radius: 5px; margin-top: 0.5rem; font-weight: bold;">
+                                            € 92.50
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button class="btn btn-primary" style="width: 100%;">Convert Currency</button>
+                                
+                                <div style="margin-top: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: var(--border-radius);">
+                                    <p><strong>Exchange Rates (1 USD):</strong></p>
+                                    <p>EUR: 0.9250 | GBP: 0.7900 | JPY: 149.50 | AUD: 1.5200</p>
+                                    <p style="font-size: 0.9rem; color: #777; margin-top: 0.5rem;">Rates updated: Today, 14:30 UTC</p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    'weather': {
+                        title: 'Weather Check',
+                        content: `
+                            <div style="max-width: 500px; margin: 0 auto;">
+                                <h3>Destination Weather Forecast</h3>
+                                <p>Check current weather and forecasts for your travel destination.</p>
+                                
+                                <div style="margin: 1.5rem 0;">
+                                    <input type="text" placeholder="Enter destination" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" value="Paris, France">
+                                    <button class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">Check Weather</button>
+                                </div>
+                                
+                                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: var(--border-radius);">
+                                    <h4 style="margin-bottom: 1rem;">Paris, France - 7 Day Forecast</h4>
+                                    
+                                    <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem;">
+                                        ${['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => `
+                                            <div style="text-align: center; padding: 0.5rem; background: white; border-radius: 5px;">
+                                                <div style="font-weight: bold;">${day}</div>
+                                                <div style="font-size: 1.5rem;">☀️</div>
+                                                <div>22°C</div>
+                                                <div style="font-size: 0.8rem; color: #777;">15°C</div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                    
+                                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #ddd;">
+                                        <p><strong>Current Conditions:</strong> Sunny, 22°C, Humidity: 65%</p>
+                                        <p><strong>Best Time to Visit:</strong> April to June, September to October</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    },
+                    'language': {
+                        title: 'Language Guide',
+                        content: `
+                            <div style="max-width: 500px; margin: 0 auto;">
+                                <h3>Travel Language Guide</h3>
+                                <p>Essential phrases and pronunciation guide for your destination.</p>
+                                
+                                <div style="margin: 1.5rem 0;">
+                                    <select style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                                        <option>Spanish (Spain)</option>
+                                        <option>French</option>
+                                        <option>Italian</option>
+                                        <option>German</option>
+                                        <option>Japanese</option>
+                                    </select>
+                                </div>
+                                
+                                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: var(--border-radius);">
+                                    <h4 style="margin-bottom: 1rem;">Essential Spanish Phrases</h4>
+                                    
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                        <div>
+                                            <p><strong>Hello</strong></p>
+                                            <p>Hola</p>
+                                            <p style="font-size: 0.9rem; color: #777;">OH-lah</p>
+                                        </div>
+                                        <div>
+                                            <p><strong>Thank you</strong></p>
+                                            <p>Gracias</p>
+                                            <p style="font-size: 0.9rem; color: #777;">GRAH-syahs</p>
+                                        </div>
+                                        <div>
+                                            <p><strong>Where is...?</strong></p>
+                                            <p>¿Dónde está...?</p>
+                                            <p style="font-size: 0.9rem; color: #777;">DOHN-deh ehs-TAH</p>
+                                        </div>
+                                        <div>
+                                            <p><strong>How much?</strong></p>
+                                            <p>¿Cuánto cuesta?</p>
+                                            <p style="font-size: 0.9rem; color: #777;">KWAHN-toh KWEHS-tah</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #ddd;">
+                                        <p><strong>Pro Tip:</strong> Download a language app like Duolingo to practice before your trip.</p>
+                                        <button class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+                                            <i class="fas fa-volume-up"></i> Listen to Pronunciation
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    }
+                };
+                
+                if (toolDetails[tool]) {
+                    showModal(toolDetails[tool].title, toolDetails[tool].content);
+                }
+            }
+        }
+
+        function closeToolPage(tool) {
+            const toolPages = {
+                'budget': budgetCalculatorPage,
+                'itinerary': itineraryPlannerPage,
+                'packing': packingListPage
+            };
+            
+            const toolPage = toolPages[tool];
+            if (toolPage) {
+                toolPage.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function showResourceDetails(resource) {
+            const resourceDetails = {
+                'guides': {
+                    title: 'Travel Guides',
+                    content: `
+                        <div style="max-width: 600px; margin: 0 auto;">
+                            <h3>Comprehensive Travel Guides</h3>
+                            <p>Detailed guides for planning your perfect trip to destinations around the world.</p>
+                            
+                            <div style="margin: 1.5rem 0;">
+                                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                                    <div style="background: #f8f9fa; padding: 1rem; border-radius: var(--border-radius);">
+                                        <h4>Europe</h4>
+                                        <ul>
+                                            <li>Paris City Guide</li>
+                                            <li>Italian Riviera</li>
+                                            <li>Greek Islands</li>
+                                            <li>Swiss Alps</li>
+                                        </ul>
+                                    </div>
+                                    <div style="background: #f8f9fa; padding: 1rem; border-radius: var(--border-radius);">
+                                        <h4>Asia</h4>
+                                        <ul>
+                                            <li>Japan Cultural Guide</li>
+                                            <li>Thailand Beaches</li>
+                                            <li>Vietnam Food Tour</li>
+                                            <li>Bali Retreat Guide</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button class="btn btn-primary" style="width: 100%;">Browse All Guides</button>
+                        </div>
+                    `
+                },
+                'tips': {
+                    title: 'Travel Tips',
+                    content: `
+                        <div style="max-width: 600px; margin: 0 auto;">
+                            <h3>Expert Travel Tips</h3>
+                            <p>Pro tips from seasoned travelers to make your journey smoother and more enjoyable.</p>
+                            
+                            <div style="margin: 1.5rem 0;">
+                                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: var(--border-radius);">
+                                    <h4>Top 10 Travel Tips</h4>
+                                    <ol style="margin-left: 1.5rem;">
+                                        <li>Always pack a portable charger</li>
+                                        <li>Make digital copies of important documents</li>
+                                        <li>Learn basic local phrases</li>
+                                        <li>Pack light - you'll thank yourself later</li>
+                                        <li>Get travel insurance</li>
+                                        <li>Notify your bank before traveling</li>
+                                        <li>Carry some local currency in cash</li>
+                                        <li>Download offline maps</li>
+                                        <li>Keep an open mind and be flexible</li>
+                                        <li>Respect local customs and traditions</li>
+                                    </ol>
+                                </div>
+                            </div>
+                            
+                            <button class="btn btn-primary" style="width: 100%;">Get More Tips</button>
+                        </div>
+                    `
+                },
+                'visa': {
+                    title: 'Visa Information',
+                    content: `
+                        <div style="max-width: 600px; margin: 0 auto;">
+                            <h3>Visa Requirements & Information</h3>
+                            <p>Check visa requirements for your nationality and destination country.</p>
+                            
+                            <div style="margin: 1.5rem 0;">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                    <div>
+                                        <label>Your Nationality</label>
+                                        <select style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                                            <option>United States</option>
+                                            <option>United Kingdom</option>
+                                            <option>Canada</option>
+                                            <option>Australia</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label>Destination</label>
+                                        <select style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                                            <option>France</option>
+                                            <option>Japan</option>
+                                            <option>Thailand</option>
+                                            <option>Australia</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div style="background: #4CAF50; color: white; padding: 1rem; border-radius: var(--border-radius); margin-top: 1rem;">
+                                    <h4>Visa Status: Not Required</h4>
+                                    <p>US citizens can stay in France for up to 90 days without a visa for tourism purposes.</p>
+                                </div>
+                            </div>
+                            
+                            <button class="btn btn-primary" style="width: 100%;">Check Another Country</button>
+                        </div>
+                    `
+                }
+            };
+            
+            if (resourceDetails[resource]) {
+                showModal(resourceDetails[resource].title, resourceDetails[resource].content);
+            } else {
+                showNotification(`Opening ${resource} resource...`);
+            }
+        }
+
+        function showSocialPlatform(platform) {
+            const platformNames = {
+                'facebook': 'Facebook',
+                'twitter': 'Twitter',
+                'instagram': 'Instagram',
+                'pinterest': 'Pinterest',
+                'youtube': 'YouTube',
+                'tiktok': 'TikTok'
+            };
+            
+            showNotification(`Opening our ${platformNames[platform] || platform} page in a new window...`);
+            // In a real implementation, this would open the actual social media page
+            // window.open(`https://${platform}.com/globalexplorer`, '_blank');
+        }
+
+        function showPrivacyPolicy() {
+            const privacyContent = `
+                <div style="max-width: 800px; margin: 0 auto; max-height: 70vh; overflow-y: auto;">
+                    <h2>Privacy Policy</h2>
+                    <p>Last updated: ${new Date().toLocaleDateString()}</p>
+                    
+                    <h3>1. Information We Collect</h3>
+                    <p>We collect information you provide directly to us, such as when you create an account, subscribe to our newsletter, or use our travel tools.</p>
+                    
+                    <h3>2. How We Use Your Information</h3>
+                    <p>We use the information we collect to provide, maintain, and improve our services, to communicate with you, and to personalize your experience.</p>
+                    
+                    <h3>3. Information Sharing</h3>
+                    <p>We do not sell your personal information. We may share information with service providers who assist us in operating our website and services.</p>
+                    
+                    <h3>4. Data Security</h3>
+                    <p>We implement reasonable security measures to protect your information from unauthorized access, alteration, or destruction.</p>
+                    
+                    <h3>5. Your Rights</h3>
+                    <p>You have the right to access, correct, or delete your personal information. Contact us at privacy@globalexplorer.com to exercise these rights.</p>
+                    
+                    <h3>6. Changes to This Policy</h3>
+                    <p>We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page.</p>
+                    
+                    <div style="margin-top: 2rem;">
+                        <button class="btn btn-primary" onclick="closeDetails()">I Understand</button>
+                    </div>
+                </div>
+            `;
+            
+            showModal('Privacy Policy', privacyContent);
+        }
+
+        function showTermsOfService() {
+            const termsContent = `
+                <div style="max-width: 800px; margin: 0 auto; max-height: 70vh; overflow-y: auto;">
+                    <h2>Terms of Service</h2>
+                    <p>Last updated: ${new Date().toLocaleDateString()}</p>
+                    
+                    <h3>1. Acceptance of Terms</h3>
+                    <p>By accessing and using Global Explorer, you accept and agree to be bound by these Terms of Service.</p>
+                    
+                    <h3>2. User Accounts</h3>
+                    <p>You are responsible for maintaining the confidentiality of your account and password and for restricting access to your computer.</p>
+                    
+                    <h3>3. User Content</h3>
+                    <p>You retain ownership of any content you submit to Global Explorer, but grant us a license to use, display, and distribute such content.</p>
+                    
+                    <h3>4. Prohibited Activities</h3>
+                    <p>You agree not to use the service for any unlawful purpose or in any way that could damage, disable, or impair the service.</p>
+                    
+                    <h3>5. Intellectual Property</h3>
+                    <p>All content on Global Explorer, including text, graphics, logos, and software, is the property of Global Explorer or its content suppliers.</p>
+                    
+                    <h3>6. Limitation of Liability</h3>
+                    <p>Global Explorer shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of the service.</p>
+                    
+                    <div style="margin-top: 2rem;">
+                        <button class="btn btn-primary" onclick="closeDetails()">I Agree</button>
+                    </div>
+                </div>
+            `;
+            
+            showModal('Terms of Service', termsContent);
+        }
+
+        function calculateDetailedBudget() {
+            const destination = document.getElementById('budgetDest').value;
+            const days = parseInt(document.getElementById('budgetDays').value);
+            const travelers = parseInt(document.getElementById('budgetTravelers').value);
+            
+            if (!destination || !days || !travelers) {
+                showNotification("Please fill in all required fields", true);
+                return;
+            }
+            
+            // Get selected values
+            const accommodation = document.querySelector('input[name="accommodation"]:checked').value;
+            const meals = document.querySelector('input[name="meals"]:checked').value;
+            const transport = document.querySelector('input[name="transport"]:checked').value;
+            
+            // Calculate costs
+            let accommodationCost, mealsCost, transportCost;
+            
+            switch(accommodation) {
+                case 'budget': accommodationCost = 40; break;
+                case 'mid': accommodationCost = 95; break;
+                case 'luxury': accommodationCost = 200; break;
+            }
+            
+            switch(meals) {
+                case 'budget': mealsCost = 20; break;
+                case 'mid': mealsCost = 40; break;
+                case 'luxury': mealsCost = 80; break;
+            }
+            
+            switch(transport) {
+                case 'budget': transportCost = 10; break;
+                case 'mid': transportCost = 40; break;
+                case 'luxury': transportCost = 100; break;
+            }
+            
+            // Calculate totals
+            const totalAccommodation = accommodationCost * days * travelers;
+            const totalMeals = mealsCost * days * travelers;
+            const totalTransport = transportCost * days * travelers;
+            const totalActivities = 50 * days * travelers; // Estimated activities cost
+            const totalCost = totalAccommodation + totalMeals + totalTransport + totalActivities;
+            const perPersonCost = totalCost / travelers;
+            
+            // Display results
+            document.getElementById('accCost').textContent = `$${totalAccommodation.toLocaleString()}`;
+            document.getElementById('foodCostDetailed').textContent = `$${totalMeals.toLocaleString()}`;
+            document.getElementById('transCost').textContent = `$${totalTransport.toLocaleString()}`;
+            document.getElementById('actCost').textContent = `$${totalActivities.toLocaleString()}`;
+            document.getElementById('totalCostDetailed').textContent = `$${totalCost.toLocaleString()}`;
+            document.getElementById('perPersonCost').textContent = `$${perPersonCost.toLocaleString()}`;
+            
+            // Show results
+            document.getElementById('budgetResultDetailed').style.display = 'block';
+            
+            // Scroll to results
+            document.getElementById('budgetResultDetailed').scrollIntoView({ behavior: 'smooth' });
+            
+            showNotification(`Budget calculated for ${destination}: $${totalCost.toLocaleString()} total for ${travelers} traveler(s)`);
+        }
+
+        function initializeItineraryPlanner() {
+            const container = document.getElementById('itineraryDaysContainer');
+            container.innerHTML = '';
+            currentItinerary = [];
+            itineraryDays = 1;
+            addItineraryDay();
+        }
+
+        function addItineraryDay() {
+            const container = document.getElementById('itineraryDaysContainer');
+            const dayDiv = document.createElement('div');
+            dayDiv.className = 'itinerary-day';
+            dayDiv.style.marginBottom = '1.5rem';
+            dayDiv.style.padding = '1rem';
+            dayDiv.style.backgroundColor = '#f8f9fa';
+            dayDiv.style.borderRadius = 'var(--border-radius)';
+            
+            dayDiv.innerHTML = `
+                <h4>Day ${itineraryDays}</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem;">
+                    <div>
+                        <label>Morning</label>
+                        <input type="text" class="morning-activity" placeholder="Morning activity" data-day="${itineraryDays}">
+                    </div>
+                    <div>
+                        <label>Afternoon</label>
+                        <input type="text" class="afternoon-activity" placeholder="Afternoon activity" data-day="${itineraryDays}">
+                    </div>
+                </div>
+                <div style="margin-top: 0.5rem;">
+                    <label>Evening</label>
+                    <input type="text" class="evening-activity" placeholder="Evening activity" data-day="${itineraryDays}" style="width: 100%;">
+                </div>
+                <div style="margin-top: 0.5rem;">
+                    <label>Notes</label>
+                    <textarea class="day-notes" placeholder="Additional notes for the day" style="width: 100%; height: 60px;"></textarea>
+                </div>
+            `;
+            
+            container.appendChild(dayDiv);
+            
+            // Add event listeners to the new inputs
+            dayDiv.querySelectorAll('input, textarea').forEach(input => {
+                input.addEventListener('change', updateItineraryPreview);
+            });
+            
+            itineraryDays++;
+        }
+
+        function updateItineraryPreview() {
+            const destination = document.getElementById('itineraryDestination').value;
+            const tripName = document.getElementById('tripName').value;
+            
+            if (!destination && !tripName) {
+                document.getElementById('itineraryPreviewContainer').style.display = 'none';
+                return;
+            }
+            
+            // Collect all activities
+            currentItinerary = [];
+            const dayElements = document.querySelectorAll('.itinerary-day');
+            
+            dayElements.forEach((dayElement, index) => {
+                const dayNumber = index + 1;
+                const morning = dayElement.querySelector('.morning-activity').value;
+                const afternoon = dayElement.querySelector('.afternoon-activity').value;
+                const evening = dayElement.querySelector('.evening-activity').value;
+                const notes = dayElement.querySelector('.day-notes').value;
+                
+                if (morning || afternoon || evening || notes) {
+                    currentItinerary.push({
+                        day: dayNumber,
+                        morning,
+                        afternoon,
+                        evening,
+                        notes
+                    });
+                }
+            });
+            
+            // Update preview
+            const previewContent = document.getElementById('itineraryPreviewContent');
+            previewContent.innerHTML = '';
+            
+            if (currentItinerary.length === 0) {
+                previewContent.innerHTML = '<p>No activities added yet. Add activities to see your itinerary preview.</p>';
+                document.getElementById('itineraryPreviewContainer').style.display = 'block';
+                return;
+            }
+            
+            let previewHtml = '';
+            if (tripName) previewHtml += `<h4>${tripName}</h4>`;
+            if (destination) previewHtml += `<p><strong>Destination:</strong> ${destination}</p>`;
+            
+            currentItinerary.forEach(day => {
+                previewHtml += `
+                    <div style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #ddd;">
+                        <h5>Day ${day.day}</h5>
+                        <div style="font-size: 0.9rem;">
+                            ${day.morning ? `<p><strong>Morning:</strong> ${day.morning}</p>` : ''}
+                            ${day.afternoon ? `<p><strong>Afternoon:</strong> ${day.afternoon}</p>` : ''}
+                            ${day.evening ? `<p><strong>Evening:</strong> ${day.evening}</p>` : ''}
+                            ${day.notes ? `<p><strong>Notes:</strong> ${day.notes}</p>` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            previewContent.innerHTML = previewHtml;
+            document.getElementById('itineraryPreviewContainer').style.display = 'block';
+        }
+
+        function saveItinerary() {
+            const destination = document.getElementById('itineraryDestination').value;
+            const tripName = document.getElementById('tripName').value;
+            
+            if (!destination && !tripName && currentItinerary.length === 0) {
+                showNotification("Please add at least one activity to your itinerary", true);
+                return;
+            }
+            
+            const itineraryData = {
+                name: tripName || `Trip to ${destination}`,
+                destination: destination,
+                days: currentItinerary,
+                created: new Date().toLocaleDateString()
+            };
+            
+            // In a real app, this would save to a database
+            // For now, just show a success message
+            showNotification(`Itinerary "${itineraryData.name}" saved successfully!`);
+            
+            // Optional: Reset form
+            // document.getElementById('itineraryDestination').value = '';
+            // document.getElementById('tripName').value = '';
+            // initializeItineraryPlanner();
+        }
+
+        function generatePackingList() {
+            const destination = document.getElementById('packingDestination').value;
+            const duration = document.getElementById('tripDuration').value;
+            const tripType = document.querySelector('input[name="tripType"]:checked');
+            const season = document.querySelector('input[name="season"]:checked');
+            
+            if (!destination || !duration || !tripType || !season) {
+                showNotification("Please fill in all fields and make selections", true);
+                return;
+            }
+            
+            // Generate packing list based on selections
+            const essentials = [
+                'Passport & Documents',
+                'Travel Insurance Info',
+                'Credit/Debit Cards',
+                'Cash (Local Currency)',
+                'Phone & Charger',
+                'Power Adapter',
+                'Medications & First Aid Kit',
+                'Sunglasses',
+                'Sunscreen (SPF 30+)',
+                'Reusable Water Bottle'
+            ];
+            
+            let clothing = [];
+            switch(season.value) {
+                case 'summer':
+                    clothing = ['T-shirts (5-7)', 'Shorts (2-3)', 'Swimwear', 'Sun Hat', 'Light Jacket', 'Comfortable Walking Shoes'];
+                    break;
+                case 'winter':
+                    clothing = ['Thermal Underwear', 'Warm Sweaters (3-4)', 'Winter Coat', 'Gloves', 'Warm Hat', 'Scarf', 'Winter Boots'];
+                    break;
+                case 'spring':
+                    clothing = ['Light Jacket', 'Long-sleeve Shirts (4-5)', 'Jeans/Pants (2-3)', 'Light Sweater', 'Comfortable Walking Shoes', 'Umbrella'];
+                    break;
+                case 'fall':
+                    clothing = ['Light Jacket', 'Long-sleeve Shirts (4-5)', 'Jeans/Pants (2-3)', 'Light Sweater', 'Comfortable Walking Shoes', 'Umbrella'];
+                    break;
+            }
+            
+            let tripSpecific = [];
+            switch(tripType.value) {
+                case 'beach':
+                    tripSpecific = ['Beach Towel', 'Flip Flops', 'Beach Bag', 'Snorkel Gear', 'Beach Cover-up', 'Waterproof Phone Case'];
+                    break;
+                case 'city':
+                    tripSpecific = ['Day Bag', 'City Map/Guidebook', 'Dressier Outfit', 'Comfortable Walking Shoes', 'Portable Charger'];
+                    break;
+                case 'hiking':
+                    tripSpecific = ['Hiking Boots', 'Backpack', 'Waterproof Jacket', 'Trekking Poles', 'Headlamp', 'Hydration System'];
+                    break;
+                case 'business':
+                    tripSpecific = ['Business Attire', 'Dress Shoes', 'Laptop & Case', 'Portfolio', 'Business Cards', 'Travel Steamer'];
+                    break;
+                case 'winter':
+                    tripSpecific = ['Ski/Snowboard Gear', 'Thermal Layers', 'Snow Boots', 'Goggles', 'Hand Warmers', 'Lip Balm with SPF'];
+                    break;
+                case 'camping':
+                    tripSpecific = ['Tent', 'Sleeping Bag', 'Camping Stove', 'Headlamp', 'Multi-tool', 'Water Purification Tablets'];
+                    break;
+            }
+            
+            const toiletries = [
+                'Toothbrush & Toothpaste',
+                'Shampoo & Conditioner',
+                'Body Wash',
+                'Deodorant',
+                'Razor & Shaving Cream',
+                'Hairbrush/Comb',
+                'Basic Makeup (if applicable)',
+                'Hand Sanitizer',
+                'Wet Wipes'
+            ];
+            
+            const accessories = [
+                'Camera & Charger',
+                'Portable Power Bank',
+                'Earphones',
+                'Travel Pillow',
+                'Eye Mask',
+                'Book/E-reader',
+                'Travel Journal & Pen',
+                'Locks for Bags'
+            ];
+            
+            // Adjust based on duration
+            let durationTips = '';
+            switch(duration) {
+                case 'weekend':
+                    durationTips = 'Pack light - you only need essentials for a few days.';
+                    break;
+                case 'week':
+                    durationTips = 'Consider doing laundry midway through your trip to pack lighter.';
+                    break;
+                case 'twoWeeks':
+                    durationTips = 'Plan outfits that can be mixed and matched. Pack versatile clothing.';
+                    break;
+                case 'month':
+                    durationTips = 'Pack for one week and plan to do laundry regularly. Include multi-purpose items.';
+                    break;
+            }
+            
+            // Display the lists
+            document.getElementById('essentialsList').innerHTML = essentials.map(item => `<div>✓ ${item}</div>`).join('');
+            document.getElementById('clothingList').innerHTML = clothing.map(item => `<div>✓ ${item}</div>`).join('');
+            document.getElementById('toiletriesList').innerHTML = toiletries.map(item => `<div>✓ ${item}</div>`).join('');
+            document.getElementById('accessoriesList').innerHTML = accessories.concat(tripSpecific).map(item => `<div>✓ ${item}</div>`).join('');
+            
+            // Show the results
+            document.getElementById('packingListResult').style.display = 'block';
+            
+            // Scroll to results
+            document.getElementById('packingListResult').scrollIntoView({ behavior: 'smooth' });
+            
+            showNotification(`Packing list generated for ${destination} (${duration} ${tripType.value} trip in ${season.value})`);
+        }
+
+        function addToItinerary(destinationId) {
+            const destination = destinationsData.find(d => d.id === destinationId);
+            if (!destination) return;
+            
+            showNotification(`Added ${destination.name} to your itinerary!`);
+            
+            // In a real implementation, this would add to the user's saved itinerary
+            // For now, we'll suggest opening the itinerary planner
+            setTimeout(() => {
+                if (confirm(`Would you like to open the itinerary planner to add ${destination.name} to your trip?`)) {
+                    showToolPage('itinerary');
+                    // Pre-fill destination in itinerary planner
+                    document.getElementById('itineraryDestination').value = destination.name;
+                }
+            }, 500);
+        }
+
+        function showModal(title, content) {
+            // Create modal container
+            const modal = document.createElement('div');
+            modal.className = 'modal active';
+            modal.style.display = 'flex';
+            
+            // Create modal content
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>${title}</h2>
+                        <button class="close-modal" onclick="this.closest('.modal').remove(); document.body.style.overflow = 'auto';">&times;</button>
+                    </div>
+                    <div>${content}</div>
+                </div>
+            `;
+            
+            // Add to page
+            document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
+            
+            // Close when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+
+        function closeDetails() {
+            const modal = document.querySelector('.modal.active');
+            if (modal) {
+                modal.remove();
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function showNotification(message, isError = false) {
+            // Remove existing notification
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification ${isError ? 'error' : 'success'}`;
+            notification.textContent = message;
+            
+            // Style the notification
+            notification.style.position = 'fixed';
+            notification.style.top = '20px';
+            notification.style.right = '20px';
+            notification.style.backgroundColor = isError ? '#f44336' : '#4CAF50';
+            notification.style.color = 'white';
+            notification.style.padding = '15px 20px';
+            notification.style.borderRadius = '5px';
+            notification.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+            notification.style.zIndex = '3000';
+            notification.style.maxWidth = '400px';
+            notification.style.wordWrap = 'break-word';
+            notification.style.fontWeight = '500';
+            
+            // Add close button
+            const closeBtn = document.createElement('button');
+            closeBtn.innerHTML = '&times;';
+            closeBtn.style.background = 'none';
+            closeBtn.style.border = 'none';
+            closeBtn.style.color = 'white';
+            closeBtn.style.fontSize = '1.2rem';
+            closeBtn.style.position = 'absolute';
+            closeBtn.style.top = '5px';
+            closeBtn.style.right = '10px';
+            closeBtn.style.cursor = 'pointer';
+            closeBtn.onclick = () => notification.remove();
+            
+            notification.appendChild(closeBtn);
+            
+            // Add to page
+            document.body.appendChild(notification);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+
+        // Make functions available globally for inline event handlers
+        window.showToolPage = showToolPage;
+        window.addToItinerary = addToItinerary;
+        window.closeDetails = closeDetails;
+    </script>
+</body>
+</html>
